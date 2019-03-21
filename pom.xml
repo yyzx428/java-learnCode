@@ -23,6 +23,7 @@
         <module>learnCode</module>
         <module>mybatis-use</module>
         <module>Spring-use</module>
+        <module>spring-cloud-sample</module>
     </modules>
 
 </project>
