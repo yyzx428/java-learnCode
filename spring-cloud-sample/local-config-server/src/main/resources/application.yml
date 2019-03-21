@@ -1,4 +1,3 @@
-
 spring:
   cloud:
     config:
@@ -11,8 +10,12 @@ spring:
           password:
           search-paths: respo
 
+
 server:
   port: 8888
+
+
+
 
   #请求资源的HTTP格式
   #/{application}/{profile}[/{label}]

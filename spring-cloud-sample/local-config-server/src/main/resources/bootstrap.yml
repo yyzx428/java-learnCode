@@ -1,0 +1,15 @@
+encrypt:
+#非对称密钥
+  key-store:
+    alias: config-server
+    location: config-server.keystore
+    password: 111111
+    secret: 111111
+# 对称密钥配置
+ # key: foo
+
+
+
+
+  #  jre Java Cryptography Extension  生成非对称密钥
+  #  keytool -genkeypair -alias config-server -keyalg RSA -keystore config-server.keystore
