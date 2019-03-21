@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.mybatisuse.dao.StudentDao">
+
+    <resultMap id="studentWithSubjectMap" type="com.example.mybatisuse.entity.Student">
+        <id column="id" property="id"/>
+        <result column="name" property="name"/>
+        <collection property="subjects" ofType="com.example.mybatisuse.entity.Subject">
+            <id column="subjectId" />
+            <result column="score" property="score"/>
+            <result column="subjectName" property="name"/>
+        </collection>
+    </resultMap>
+
+    <resultMap id="studentWithClassmate" type="com.example.mybatisuse.entity.Student">
+        <id column="id" property="id"/>
+        <result column="name" property="name"/>
+        <association property="classmate" javaType="com.example.mybatisuse.entity.Classmate">
+            <result column="ClassmateName" property="name"/>
+        </association>
+    </resultMap>
+
+    <select id="getAllStudent"  resultType="Student">
+        <include refid="studentBaseSql"/>
+    </select>
+
+    <select id="getAllStudentAndSubject" resultMap="studentWithSubjectMap">
+        select st.id,st.name,su.id as subjectId,su.score,su.name as subjectName
+        from student st
+        inner join subject su  on su.student_id = st.id
+    </select>
+
+    <select id="getAllStudentAndClassmate" resultMap="studentWithClassmate">
+        select st.id,st.name,cl.name as ClassmateName
+        from student st
+        inner join class_mate cl  on cl.id = st.class_mate_id
+    </select>
+
+    <select id="getAllStudentByIds" resultType="com.example.mybatisuse.entity.Student">
+        select st.id,st.name,cl.name as ClassmateName
+        from student st
+        inner join class_mate cl  on cl.id = st.class_mate_id
+        where st.id in
+        <foreach collection="studentId" index="index" item="id" close=")" open="(" separator=",">
+            #{id}
+        </foreach>
+        <choose>
+            <when test="id == 2">
+                123
+            </when>
+            <otherwise>
+
+            </otherwise>
+        </choose>
+    </select>
+
+    <sql id="studentBaseSql">
+        select * from student
+    </sql>
+</mapper>

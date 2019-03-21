@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.mybatisuse.dao.TemplateDao">
+    <resultMap id="templateMap" type="com.example.mybatisuse.entity.Template">
+        <id column="id" property="id"/>
+        <result column="content" property="content" typeHandler="CustomType"/>
+    </resultMap>
+
+    <sql id="BaseSql">
+        select * from template
+    </sql>
+
+    <insert id="insert" parameterType="com.example.mybatisuse.entity.Template">
+        insert into template values (#{id},#{content,typeHandler=CustomType})
+    </insert>
+
+    <select id="getAllTemplate" resultMap="templateMap">
+        <include refid="BaseSql"/>
+    </select>
+
+    <select id="getTemplate" resultMap="templateMap">
+        <include refid="BaseSql"/>
+        <where>
+            id = #{value}
+        </where>
+    </select>
+
+    <select id="getTemplateByIds" resultType="com.example.mybatisuse.entity.Template">
+        <include refid="BaseSql"/>
+        where id in
+        <foreach collection="projectIds"  close=")" open="(" separator="," item="item" index="index" >
+            #{item}
+        </foreach>
+        and createTime between #{queryDto.startTime} and #{queryDto.endTime}
+    </select>
+</mapper>

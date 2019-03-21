@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+
+    <properties resource="com/example/h2-database-config.properties"/>
+
+    <settings>
+        <setting name="mapUnderscoreToCamelCase" value="true"/>
+    </settings>
+
+    <typeAliases>
+        <typeAlias type="com.example.mybatisuse.entity.Student" alias="Student"/>
+        <typeAlias type="com.example.mybatisuse.mybatis.typeHandler.CustomTypeHandler" alias="CustomType"/>
+    </typeAliases>
+
+    <typeHandlers>
+        <typeHandler handler="com.example.mybatisuse.mybatis.typeHandler.CustomTypeHandler"/>
+        <typeHandler handler="org.apache.ibatis.type.LocalDateTimeTypeHandler" />
+    </typeHandlers>
+
+    <plugins>
+        <plugin interceptor="com.example.mybatisuse.mybatis.plugin.MybatisCustomPlugin"/>
+    </plugins>
+
+    <environments default="default">
+        <environment id="default">
+            <transactionManager type="JDBC"/>
+            <dataSource type="POOLED">
+                <property name="driver" value="${driver}"/>
+                <property name="url" value="${url}"/>
+                <property name="username" value="${username}" />
+                <property name="password" value="${password}"/>
+            </dataSource>
+        </environment>
+
+        <environment id="test">
+            <transactionManager type="JDBC"/>
+            <dataSource type="com.example.mybatisuse.DataSourceFactory.MyselfDefineDataSourceFactory">
+                <property name="driverClass" value="${driver}"/>
+                <property name="url" value="${url}"/>
+                <property name="username" value="${username}" />
+                <property name="password" value="${password}"/>
+                <property name="validationQuery" value="${validationQuery}"/>
+            </dataSource>
+        </environment>
+
+    </environments>
+
+
+    <mappers>
+        <mapper resource="mappers/StudentDao.xml"/>
+        <mapper resource="mappers/TemplateDao.xml"/>
+    </mappers>
+
+</configuration>
