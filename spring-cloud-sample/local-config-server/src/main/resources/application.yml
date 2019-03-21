@@ -1,1 +1,22 @@
 
+spring:
+  cloud:
+    config:
+      server:
+        bootstrap: true
+        git:
+          default-label: master
+          uri: https://github.com/yyzx428/SpringcloudConfig
+          username:
+          password:
+          search-paths: respo
+
+server:
+  port: 8888
+
+  #请求资源的HTTP格式
+  #/{application}/{profile}[/{label}]
+  #/{application}-{profile}.yml
+  #/{label}/{application}-{profile}.yml
+  #/{application}-{profile}.properties
+  #/{label}/{application}-{profile}.properties
