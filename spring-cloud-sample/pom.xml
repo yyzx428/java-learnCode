@@ -11,5 +11,9 @@
 
     <artifactId>spring-cloud-sample</artifactId>
 
+    <modules>
+        <module>environment-decrypt-sample</module>
+        <module>local-config-server</module>
+    </modules>
 
 </project>
