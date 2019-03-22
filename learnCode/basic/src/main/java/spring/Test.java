@@ -1,5 +1,6 @@
 package spring;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.cglib.core.DebuggingClassWriter;
@@ -14,7 +15,7 @@ public class Test {
         System.setProperty(DebuggingClassWriter.DEBUG_LOCATION_PROPERTY, "F:\\class");
         System.getProperties().put("sun.misc.ProxyGenerator.saveGeneratedFiles", "true");
         AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext();
-        context.register(AppConfig.class, AppComponent.class);
+        context.register( AppComponent.class,AppConfig.class);
         context.refresh();
         ClientServiceImpl clientService1 = context.getBean("clientService1", ClientServiceImpl.class);
         ClientServiceImpl clientService2 = context.getBean("clientService2", ClientServiceImpl.class);
@@ -51,7 +52,7 @@ public class Test {
 
         @Bean
         public ClientDao clientDao() {
-            return new ClientDaoImpl();
+            return new ClientDaoImpl("AppConfig");
         }
     }
 
@@ -74,17 +75,22 @@ public class Test {
 
         @Bean
         public ClientDao clientDao() {
-            return new ClientDaoImpl();
+            return new ClientDaoImpl("AppComponent");
         }
     }
 
-    static class ClientDaoImpl implements ClientDao {
+    @Setter
+    @Getter
+    @AllArgsConstructor
+    private static class ClientDaoImpl implements ClientDao {
+        private String index;
+
 
     }
 
     @Setter
     @Getter
-    static class ClientServiceImpl implements ClientService {
+    private static class ClientServiceImpl implements ClientService {
         ClientDao clientDao;
     }
 }
