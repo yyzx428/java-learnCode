@@ -1,3 +1,13 @@
+spring:
+  application:
+    name: config-server
+
+eureka:
+  client:
+    service-url:
+      defaultZone: "http://127.0.0.1:21111/eureka"
+
+
 encrypt:
 #非对称密钥
   key-store:
@@ -13,3 +23,4 @@ encrypt:
 
   #  jre Java Cryptography Extension  生成非对称密钥
   #  keytool -genkeypair -alias config-server -keyalg RSA -keystore config-server.keystore
+

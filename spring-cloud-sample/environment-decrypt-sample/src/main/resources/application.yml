@@ -1,16 +1,3 @@
-spring:
-  application:
-    name: config-client
-  output:
-    ansi:
-      enabled: always
-  cloud:
-    config:
-       name: config-client
-       profile: dev
-       failFast: true
-       label: master
-
 
 server:
   port: 9090

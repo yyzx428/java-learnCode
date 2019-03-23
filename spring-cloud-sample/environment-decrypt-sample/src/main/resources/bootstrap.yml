@@ -1,3 +1,19 @@
+spring:
+  application:
+    name: environment-decrypt
+  output:
+    ansi:
+      enabled: always
+  cloud:
+    config:
+      name: config-client
+      profile: dev
+      failFast: true
+      label: master
+      discovery:
+        service-id: config-server
+        enabled: true
+
 encrypt:
 #非对称密钥
   key-store:
@@ -17,3 +33,9 @@ encrypt:
 
   #  jre Java Cryptography Extension  生成非对称密钥
   #  keytool -genkeypair -alias config-server -keyalg RSA -keystore config-server.keystore
+
+
+eureka:
+  client:
+    service-url:
+      defaultZone: "http://127.0.0.1:21111/eureka"

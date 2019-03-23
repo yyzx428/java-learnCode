@@ -10,10 +10,12 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>spring-cloud-sample</artifactId>
+    <packaging>pom</packaging>
 
     <modules>
         <module>environment-decrypt-sample</module>
         <module>local-config-server</module>
+        <module>local-eureka-server</module>
     </modules>
 
 </project>
