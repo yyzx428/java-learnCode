@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.util.jar.JarFile;
 
 public class Test {
-    static String path = System.getProperty("user.dir") + "\\basic\\src\\main\\resources\\td-query-service-core-1.0-SNAPSHOT.jar";
+    static String path = System.getProperty("user.dir") + "\\basic\\src\\main\\resources\\1111.jar";
     static File source = new File(path);
 
     public static void main(String[] args) {
