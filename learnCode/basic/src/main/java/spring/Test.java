@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 public class Test {
 
     public static void main(String[] args) {
-        System.setProperty(DebuggingClassWriter.DEBUG_LOCATION_PROPERTY, "F:\\class");
+        System.setProperty(DebuggingClassWriter.DEBUG_LOCATION_PROPERTY, "D:\\class");
         System.getProperties().put("sun.misc.ProxyGenerator.saveGeneratedFiles", "true");
         AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext();
         context.register( AppComponent.class,AppConfig.class);
