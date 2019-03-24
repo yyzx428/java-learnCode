@@ -7,8 +7,10 @@ import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.web.reactive.function.client.WebClientCustomizer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.MediaType;
+import org.springframework.http.client.reactive.ReactorClientHttpConnector;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
 import reactor.core.scheduler.Schedulers;
@@ -28,7 +30,19 @@ public class SpringWebfluxSampleApplication implements ApplicationRunner {
 
     @Bean
     public WebClient webClient(WebClient.Builder builder) {
-        return builder.baseUrl("http://127.0.0.1:9000").build();
+        return builder.build();
+    }
+
+    @Bean
+    public WebClientCustomizer webClientCustomizer() {
+        return webClientBuilder -> {
+            webClientBuilder.baseUrl("http://127.0.0.1:9000");
+            webClientBuilder.filter((request, next) -> {
+                log.info("请求：{},{}", request, next);
+                return next.exchange(request);
+            });
+            webClientBuilder.clientConnector(new ReactorClientHttpConnector());
+        };
     }
 
     @Override
@@ -41,8 +55,11 @@ public class SpringWebfluxSampleApplication implements ApplicationRunner {
                 .accept(MediaType.APPLICATION_JSON)
                 .retrieve()
                 .bodyToMono(String.class)
+                .doOnError(c -> log.error("{}", c))
                 .doFinally(s -> countDownLatch.countDown())
                 .subscribeOn(Schedulers.single())
                 .subscribe(c -> log.info("返回结果:{}", c));
+
+        countDownLatch.await();
     }
 }
